@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "DhEtvrD6mTAaFbAa3/QkbhbutrrJkwBi2WETUTiokd1cUmy3vu6hJHHE+WVzRYvOGcZcIwrOwy4gOmVIO8garw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\sivasaisambela\\source\\repos\\.NET CORE WEB API\\DotCore\\DotCore\\DotCore.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\sivasaisambela\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.11.1\\microsoft.visualstudio.azure.containers.tools.targets.1.11.1.nupkg.sha512"
+  ],
+  "logs": []
+}
