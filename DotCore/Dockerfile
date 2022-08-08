@@ -2,23 +2,18 @@
 
 #Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
 #For more information, please see https://aka.ms/containercompat
-
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app
-EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /src
-COPY ["DotCore/DotCore.csproj", "DotCore/"]
-RUN dotnet restore "DotCore/DotCore.csproj"
-COPY . .
-WORKDIR "/src/DotCore"
-RUN dotnet build "DotCore.csproj" -c Release -o /app/build
+# Copy everything
+COPY . ./
+# Restore as distinct layers
+RUN dotnet restore
+# Build and publish a release
+RUN dotnet publish -c Release -o out
 
-FROM build AS publish
-RUN dotnet publish "DotCore.csproj" -c Release -o /app/publish
-
-FROM base AS final
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "DotCore.dll"]
